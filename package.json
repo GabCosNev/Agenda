@@ -1,0 +1,38 @@
+{
+  "name": "express-app",
+  "version": "1.0.0",
+  "description": "Express + MongoDB + EJS + Webpack setup",
+  "main": "server.js",
+  "scripts": {
+    "start": "nodemon server.js --ignore public --ignore frontend",
+    "dev": "webpack -w"
+  },
+  "keywords": [],
+  "author": "Gabriel Costa",
+  "license": "ISC",
+  "dependencies": {
+    "connect-flash": "^0.1.1",
+    "connect-mongo": "^4.6.0",
+    "core-js": "^3.37.0",
+    "csurf": "^1.11.0",
+    "dotenv": "^17.3.1",
+    "ejs": "^3.1.9",
+    "express": "^5.2.1",
+    "express-session": "^1.19.0",
+    "helmet": "^8.1.0",
+    "mongoose": "^9.2.1",
+    "regenerator-runtime": "^0.14.1",
+    "validator": "^13.15.26"
+  },
+  "devDependencies": {
+    "@babel/cli": "^7.28.6",
+    "@babel/core": "^7.29.0",
+    "@babel/preset-env": "^7.29.0",
+    "babel-loader": "^10.0.0",
+    "css-loader": "^7.1.4",
+    "nodemon": "^3.1.11",
+    "style-loader": "^4.0.0",
+    "webpack": "^5.105.2",
+    "webpack-cli": "^6.0.1"
+  }
+}
