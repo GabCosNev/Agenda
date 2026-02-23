@@ -21,7 +21,7 @@ mongoose.connect(process.env.CONNECTION_STRING)
       console.log('Servidor rodando em http://localhost:3000');
     });
   })
-  .catch(e => console.log('❌ Erro ao conectar no MongoDB:', e));
+  .catch(e => console.log('Erro ao conectar no MongoDB:', e));
 
 //Configuração da sessão
 const sessionOptions = session({
@@ -54,8 +54,8 @@ app.use(csrf());
 
 app.use(middlewareGlobal);
 app.use(csrfMiddleware);   // gera o token
-app.use(routes);
 app.use(checkCsrfError);   // trata erro
+app.use(routes);
 
 //Tratamento de erro geral
 app.on('error', (err) => {
