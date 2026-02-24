@@ -30,8 +30,39 @@ class login {
         this.errors = [];
         this.user = null;
     }
+    //login
+    async login() {
+        this.cleanUpLogin();
+        this.user = await LoginModel.findOne({ email: this.body.email });
+
+        if (!this.user) {
+            this.errors.push('Usuário não encontrado');
+            return;
+        }
+
+        if (!bcryptjs.compareSync(this.body.senha, this.user.senha)) {
+            this.errors.push('Senha inválida');
+            this.user = null;
+            return;
+        }
+    }
+
+    cleanUpLogin() {
+        for (const key in this.body) {
+            if (typeof this.body[key] !== 'string') {
+                this.body[key] = '';
+            }
+        }
+
+        this.body = {
+            email: this.body.email,
+            senha: this.body.senha
+        }
+    }
+
+    //register
     async register() {
-        this.valida();
+        this.validaRegister();
         if (this.errors.length > 0) return;
 
         await this.userExists();
@@ -41,13 +72,8 @@ class login {
         const salt = bcryptjs.genSaltSync();
         this.body.senha = bcryptjs.hashSync(this.body.senha, salt)
 
-        try {
+        this.user = await LoginModel.create(this.body);
 
-            this.user = await LoginModel.create(this.body);
-        }
-        catch (e) {
-            console.log(e)
-        }
     }
 
     async userExists() {
@@ -55,8 +81,9 @@ class login {
         if (user) this.errors.push('Usuário já existe')
 
     }
-    valida() {
-        this.cleanUp();
+
+    validaRegister() {
+        this.cleanUpRegister();
         if (!validator.isEmail(this.body.email)) {
             this.errors.push('E-mail inválido');
         }
@@ -70,15 +97,16 @@ class login {
             this.errors.push('O nome precisa ter menos que 20 caracters');
         }
         if (this.body.email.length > 20) {
-            this.errors.push('O nome precisa ter menos que 20 caracters');
+            this.errors.push('O email precisa ter menos que 20 caracters');
         }
     }
-    cleanUp() {
+    cleanUpRegister() {
         for (const key in this.body) {
             if (typeof this.body[key] !== 'string') {
                 this.body[key] = '';
             }
         }
+
         this.body = {
             nome: this.body.nome,
             email: this.body.email,

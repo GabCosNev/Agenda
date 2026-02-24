@@ -1,3 +1,3 @@
-exports.index = (req, res) => {
-    res.render('index');
+exports.agenda = (req, res) => {
+    res.render('agenda');
 }
