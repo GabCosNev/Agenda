@@ -1,20 +1,21 @@
-const express = require('express')
+const express = require('express');
 const route = express.Router();
-const homeController = require('./src/controllers/homeController')
-const loginController = require('./src/controllers/loginController')
-
+const homeController = require('./src/controllers/homeController');
+const loginController = require('./src/controllers/loginController');
+const contatoController = require('./src/controllers/contatoController');
+const {loginRequired} = require('./src/middlewares/middleware');
 
 //Rotas da home
-route.get('/', homeController.agenda);
+route.get('/', homeController.index);
 
-//Rotas de login
-route.get('/login/register', loginController.loginRegister);
-route.get('/logout', loginController.logout);
+//Rotas user
+route.get('/user/loginRegister', loginController.loginRegister);
+route.get('/user/logout', loginController.logout);
+route.post('/user/register', loginController.register);
+route.post('/user/login', loginController.login);
 
-//post login
-route.post('/register', loginController.register);
-route.post('/login', loginController.login);
-
-
+//Rotas Contato
+route.get('/contato', loginRequired, contatoController.index);
+route.post('/contato/Register', loginRequired, contatoController.register);
 
 module.exports = route;

@@ -2,7 +2,7 @@ const Login = require('../models/LoginModel')
 
 exports.loginRegister = (req, res) => {
     if(req.session.user) return res.render('loginLogado');
-    return res.render('loginRegister');
+    return res.render('userLoginRegister');
 }
 
 exports.register = async function (req, res) {
@@ -12,10 +12,10 @@ exports.register = async function (req, res) {
 
         if (login.errors.length > 0) {
             req.flash('errors', login.errors);
-            return req.session.save(() => res.redirect('/login/register'));
+            return req.session.save(() => res.redirect('/user/loginRegister'));
         }
         req.flash('success', 'Usuário cadastrado com sucesso!');
-        return req.session.save(() => res.redirect('/login/register'));
+        return req.session.save(() => res.redirect('/user/loginRegister'));
 
     } catch (e) {
         console.log(e);
@@ -29,7 +29,7 @@ exports.login = async function (req, res) {
 
         if (login.errors.length > 0) {
             req.flash('errors', login.errors);
-            return req.session.save(() => res.redirect('/login/register'));
+            return req.session.save(() => res.redirect('/user/loginRegister'));
         }
         req.session.user = login.user;
         return req.session.save(() => res.redirect('/'));

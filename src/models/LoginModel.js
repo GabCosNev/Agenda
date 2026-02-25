@@ -96,8 +96,8 @@ class login {
         if (this.body.nome.length > 20) {
             this.errors.push('O nome precisa ter menos que 20 caracters');
         }
-        if (this.body.email.length > 20) {
-            this.errors.push('O email precisa ter menos que 20 caracters');
+        if (this.body.email.length > 50) {
+            this.errors.push('O email precisa ter menos que 50 caracters');
         }
     }
     cleanUpRegister() {
