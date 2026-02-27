@@ -17,7 +17,7 @@ const contatoSchema = new mongoose.Schema({
         type: String,
         required: false,
         unique: true,
-        default: '',
+        sparse: true,
         lowercase: true
     },
     telefone: {
@@ -41,10 +41,28 @@ class Contato {
         this.contato = null;
     }
 
+    static async buscaPorId(id) {
+        if (typeof id !== 'string') return;
+        const contato = await ContatoModel.findById(id)
+        return contato;
+    }
+
+    static async buscaContatos() {
+        const contatos = await ContatoModel.find()
+            .sort({ criadoEm: -1 });
+        return contatos;
+
+    }
+    static async deleteContatos(id) {
+        if (typeof id !== 'string') return;
+        const contato = await ContatoModel.findByIdAndDelete(id)
+        return contato
+    }
+
     async register() {
         this.validation();
 
-        if(this.errors.length > 0) return;
+        if (this.errors.length > 0) return;
 
         this.contato = await ContatoModel.create(this.body)
 
@@ -58,10 +76,17 @@ class Contato {
         if (!this.body.nome) {
             this.errors.push('Nome é um campo obrigatório');
         }
-    
+
         if (!this.body.email && !this.body.telefone) {
             this.errors.push('Insira pelo menos um meio de contato e-mail ou telefone');
         }
+    }
+
+    async edit(id) {
+        if (typeof id !== 'string') return;
+        this.validation();
+        if (this.errors.length > 0) return;
+        this.contato = await ContatoModel.findByIdAndUpdate(id, this.body, { new: true });
     }
 
     cleanUp() {
@@ -74,7 +99,7 @@ class Contato {
         this.body = {
             nome: this.body.nome,
             sobrenome: this.body.sobrenome,
-            email: this.body.email,
+            email: this.body.email || null,  
             telefone: this.body.telefone
         }
     }

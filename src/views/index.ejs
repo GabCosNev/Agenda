@@ -8,16 +8,35 @@
                     <h1 class="text-center"> Agenda </h1>
                     <p class="text-center lead">Seus contatos estão abaixo</p>
 
-                        <div class="responsive-table">
-                            <table class="table my-5">
-                                <tr>
-                                    <td>Maria</td>
-                                    <td>Leticia</td>
-                                    <td>3213123</td>
-                                    <td>MariaLeticia@gmail.com</td>
-                                </tr>
-                            </table>
-                        </div>
+                    <%- include('includes/messages') %>
+                        <% if(contatos.length> 0) { %>
+                            <div class="responsive-table">
+                                <table class="table my-5">
+                                    <% contatos.forEach(contato=> { %>
+                                        <tr>
+                                            <td>
+                                                <%= contato.nome %>
+                                            </td>
+                                            <td>
+                                                <%=contato.sobrenome%>
+                                            </td>
+                                            <td>
+                                                <%=contato.telefone%>
+                                            </td>
+                                            <td>
+                                                <%=contato.email%>
+                                            </td>
+                                            <td><a href="/contato/<%= contato._id %>">Editar</a></td>
+                                            <td><a class="text-danger"
+                                                    href="/contato/delete/<%= contato._id %>">Exluir</a>
+                                            </td>
+                                        </tr>
+                                        <% }); %>
+                                </table>
+                            </div>
+                            <% } else { %>
+                                <p class="text-center-lead"> Não existem contatos na sua agenda</p>
+                                <% } %>
                 </div>
                 <div class="col-lg-2"></div>
             </div>
