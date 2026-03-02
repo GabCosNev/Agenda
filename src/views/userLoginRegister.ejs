@@ -15,7 +15,7 @@
               <div class="col-lg-6">
                 <h4 class="text-center mb-4">Cadastro</h4>
 
-                <form action="/user/register" method="POST">
+                <form class="form-registro" action="/user/register" method="POST">
                   <input type="hidden" name="_csrf" value="<%= csrfToken %>">
                   <div class="mb-3">
                     <label class="form-label">Seu nome</label>
@@ -45,7 +45,7 @@
               <div class="col-lg-6">
                 <h4 class="text-center mb-4">Login</h4>
 
-                <form action="/user/login" method="POST" autocomplete="on">
+                <form class="form-login" action="/user/login" method="POST" autocomplete="on">
                   <input type="hidden" name="_csrf" value="<%= csrfToken %>">
 
                   <div class="mb-3">

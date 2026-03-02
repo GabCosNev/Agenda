@@ -25,7 +25,7 @@ mongoose.connect(process.env.CONNECTION_STRING)
 
 //Configuração da sessão
 const sessionOptions = session({
-  secret: process.env.SESSION_SECRET || 'segredoSuperSeguro',
+  secret: process.env.SESSION_SECRET,
   store: MongoStore.create({
     client: mongoose.connection.getClient()
   }),
@@ -46,7 +46,7 @@ app.use(express.urlencoded({ extended: true }));
 app.use(express.json());
 app.use(express.static(path.join(__dirname, 'public')));
 app.use(helmet({ contentSecurityPolicy: false }));
-//Ordem correta (IMPORTANTE)
+//Ordem correta
 app.use(sessionOptions);
 app.use(flash());
 app.use(csrf());
